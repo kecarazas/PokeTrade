@@ -6,11 +6,11 @@ import lombok.AllArgsConstructor;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="user")
+@Table(name="usuario")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
