@@ -27,7 +27,12 @@ public class CartaServices {
         return cartaRepository.save(carta);
     }
 
-    public void delete(Integer id){
+    public List<Carta> saveLista(List<Carta> carta){
+        return cartaRepository.saveAll(carta);
+    }
+
+    public String delete(Integer id){
         cartaRepository.deleteById(id);
+        return "Carta eliminada correctamente";
     }
 }
