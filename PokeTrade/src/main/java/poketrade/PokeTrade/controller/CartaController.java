@@ -30,20 +30,21 @@ public class CartaController {
 
     //metodo para guardar una lista con las cartas en la base de datos
     @PostMapping("/lista")
-    public List<Carta> guardarLista(@RequestBody List<Carta> carta){
-        return cartaServices.saveLista(carta);
+    public ResponseEntity<List<Carta>> guardarLista(@RequestBody List<Carta> carta){
+        List<Carta> carta1 = cartaServices.saveLista(carta);
+        return ResponseEntity.status(201).body(carta1);
     }
 
     @GetMapping("{id}")
-    public Carta listarId(@PathVariable Integer id){
-        return cartaServices.findById(id);
+    public ResponseEntity<Carta> listarId(@PathVariable Integer id){
+        Carta carta1  = cartaServices.findById(id);
+        return ResponseEntity.ok(carta1);
     }
 
     @DeleteMapping("{id}")
-    public String eliminar(@PathVariable Integer id){
-        return cartaServices.delete(id);
-
+    public ResponseEntity<String> eliminar(@PathVariable Integer id){
+        cartaServices.delete(id);
+        return ResponseEntity.ok("carta elimanada correctamente");
     }
 
-//como hacer con springboot una migracion sql
 }

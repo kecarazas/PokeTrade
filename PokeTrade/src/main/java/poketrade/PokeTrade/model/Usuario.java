@@ -1,8 +1,6 @@
 package poketrade.PokeTrade.model;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -29,5 +27,5 @@ public class Usuario {
     //Esta validacion es para ver si el correo ingresado tiene el formato de correo apropiado por ejemplo: usuario@correo.com/.cl
     @Size(max = 100, message = "El correo no puede superar los 100 caracteres")
     @Column(nullable=false, unique=true)
-    private String correo;
+    private String email;
 }

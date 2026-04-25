@@ -31,8 +31,7 @@ public class CartaServices {
         return cartaRepository.saveAll(carta);
     }
 
-    public String delete(Integer id){
+    public void delete(Integer id){
         cartaRepository.deleteById(id);
-        return "Carta eliminada correctamente";
     }
 }
