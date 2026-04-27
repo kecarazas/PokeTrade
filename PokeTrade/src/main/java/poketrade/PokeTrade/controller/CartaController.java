@@ -1,6 +1,8 @@
 package poketrade.PokeTrade.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import poketrade.PokeTrade.DTo.CartaDTo;
 import poketrade.PokeTrade.model.Carta;
 import poketrade.PokeTrade.services.CartaServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +25,15 @@ public class CartaController {
     }
 
     @PostMapping
-    public ResponseEntity<Carta> guardar(@RequestBody Carta carta){
-        Carta  carta1 = cartaServices.save(carta);
+    public ResponseEntity<Carta> guardar(@Valid @RequestBody CartaDTo dto){
+        Carta  carta1 = cartaServices.save(dto);
         return ResponseEntity.status(201).body(carta1);
     }
 
     //metodo para guardar una lista con las cartas en la base de datos
     @PostMapping("/lista")
-    public ResponseEntity<List<Carta>> guardarLista(@RequestBody List<Carta> carta){
-        List<Carta> carta1 = cartaServices.saveLista(carta);
+    public ResponseEntity<List<Carta>> guardarLista(@Valid @RequestBody List<CartaDTo> dto){
+        List<Carta> carta1 = cartaServices.saveLista(dto);
         return ResponseEntity.status(201).body(carta1);
     }
 
