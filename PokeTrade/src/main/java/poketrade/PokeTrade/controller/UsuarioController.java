@@ -38,6 +38,6 @@ public class UsuarioController {
     @DeleteMapping("{id}")
     public ResponseEntity<String> eliminar(@PathVariable Integer id){
         usuarioServices.delete(id);
-        return ResponseEntity.ok("Usuario eliminado");
+        return ResponseEntity.noContent().build();
     }
 }

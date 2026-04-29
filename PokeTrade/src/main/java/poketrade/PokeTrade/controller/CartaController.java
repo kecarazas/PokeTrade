@@ -46,7 +46,7 @@ public class CartaController {
     @DeleteMapping("{id}")
     public ResponseEntity<String> eliminar(@PathVariable Integer id){
         cartaServices.delete(id);
-        return ResponseEntity.ok("carta elimanada correctamente");
+        return ResponseEntity.noContent().build();
     }
 
 }

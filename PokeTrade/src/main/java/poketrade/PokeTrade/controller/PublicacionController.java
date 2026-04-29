@@ -27,6 +27,12 @@ public class PublicacionController {
     @PostMapping
     public ResponseEntity<Publicacion> guardar(@Valid @RequestBody PublicacionDTo dto){
         Publicacion publicacion = publicacionServices.save(dto);
-        return ResponseEntity.status(201).body(publicacion);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> eliminar(@PathVariable Integer id){
+        publicacionServices.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
