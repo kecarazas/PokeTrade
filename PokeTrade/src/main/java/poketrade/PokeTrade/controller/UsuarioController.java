@@ -35,6 +35,12 @@ public class UsuarioController {
         return ResponseEntity.status(201).body(usuario1);
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity<Usuario> actualizar(@Valid @RequestBody UsuarioDTo dto, @PathVariable Integer id){
+        Usuario usuario1 = usuarioServices.update(id, dto);
+        return ResponseEntity.ok(usuario1);
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity<String> eliminar(@PathVariable Integer id){
         usuarioServices.delete(id);
