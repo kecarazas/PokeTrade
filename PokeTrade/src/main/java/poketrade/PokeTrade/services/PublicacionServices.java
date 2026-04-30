@@ -1,6 +1,7 @@
 package poketrade.PokeTrade.services;
 
 import poketrade.PokeTrade.DTo.PublicacionDTo;
+import poketrade.PokeTrade.exception.NotFoundException;
 import poketrade.PokeTrade.model.*;
 import poketrade.PokeTrade.repository.*;
 import jakarta.transaction.Transactional;
@@ -36,13 +37,13 @@ public class PublicacionServices {
 
         //buscamos la carta por el id
         Carta carta = cartaRepository.findById(dto.getCartaId())
-                .orElseThrow(() -> new RuntimeException("Carta no encontrada"));
+                .orElseThrow(() -> new NotFoundException("Carta no encontrada"));
         publicacion.setCarta(carta);
 
         //buscamos al usuario por el username
         if (dto.getUsername() != null){
             Usuario usuario = usuarioRepository.findByUsername(dto.getUsername())
-                    .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                    .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
             publicacion.setUsuario(usuario);
         }
         return publicacionRepository.save(publicacion);

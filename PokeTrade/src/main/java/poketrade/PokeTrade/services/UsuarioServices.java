@@ -1,7 +1,7 @@
 package poketrade.PokeTrade.services;
 
-import org.springframework.dao.DataIntegrityViolationException;
 import poketrade.PokeTrade.DTo.UsuarioDTo;
+import poketrade.PokeTrade.exception.NotFoundException;
 import poketrade.PokeTrade.model.Usuario;
 import poketrade.PokeTrade.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class UsuarioServices {
 
     public Usuario update(Integer id, UsuarioDTo dto){
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
 
         usuario.setUsername(dto.getUsername());
         usuario.setEmail(dto.getEmail());
