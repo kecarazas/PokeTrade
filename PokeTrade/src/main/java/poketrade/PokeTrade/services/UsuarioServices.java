@@ -1,5 +1,7 @@
 package poketrade.PokeTrade.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import poketrade.PokeTrade.DTo.UsuarioDTo;
 import poketrade.PokeTrade.exception.NotFoundException;
 import poketrade.PokeTrade.model.Usuario;
@@ -13,10 +15,14 @@ import java.util.List;
 @Transactional
 @Service
 public class UsuarioServices {
+
+    // Herramienta para registrar eventos importantes mientras el sistema corre
+    private static final Logger log = LoggerFactory.getLogger(UsuarioServices.class);
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public List<Usuario>  findAll(){
+    public List<Usuario> findAll(){
         return usuarioRepository.findAll();
     }
 
@@ -25,6 +31,8 @@ public class UsuarioServices {
     }
 
     public Usuario save(UsuarioDTo dto){
+        // Registramos cuando se registra un nuevo usuario en el sistema
+        log.info("Creando nuevo usuario: {}", dto.getUsername());
         Usuario usuario = new Usuario();
 
         usuario.setUsername(dto.getUsername());
@@ -34,6 +42,8 @@ public class UsuarioServices {
     }
 
     public Usuario update(Integer id, UsuarioDTo dto){
+        // Registramos cuando se actualiza la información de un usuario
+        log.info("Actualizando usuario con id: {}", id);
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
 
@@ -44,7 +54,8 @@ public class UsuarioServices {
     }
 
     public void delete(Integer id){
+        // Registramos cuando se elimina un usuario del sistema
+        log.info("Eliminando usuario con id: {}", id);
         usuarioRepository.deleteById(id);
     }
-
 }

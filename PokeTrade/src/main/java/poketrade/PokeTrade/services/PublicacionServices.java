@@ -1,5 +1,7 @@
 package poketrade.PokeTrade.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import poketrade.PokeTrade.DTo.PublicacionDTo;
 import poketrade.PokeTrade.exception.NotFoundException;
 import poketrade.PokeTrade.model.*;
@@ -8,13 +10,15 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
-
 
 @Transactional
 @Service
 public class PublicacionServices {
+
+    // Herramienta para registrar eventos importantes mientras el sistema corre
+    private static final Logger log = LoggerFactory.getLogger(PublicacionServices.class);
+
     @Autowired
     private PublicacionRepository publicacionRepository;
 
@@ -29,6 +33,8 @@ public class PublicacionServices {
     }
 
     public Publicacion save(PublicacionDTo dto){
+        // Registramos cuando se crea una nueva publicacion de venta
+        log.info("Creando nueva publicacion para carta id: {}", dto.getCartaId());
         Publicacion publicacion = new Publicacion();
 
         publicacion.setPrecio(dto.getPrecio());
@@ -50,9 +56,8 @@ public class PublicacionServices {
     }
 
     public void delete(Integer id){
+        // Registramos cuando se elimina una publicacion del sistema
+        log.info("Eliminando publicacion con id: {}", id);
         publicacionRepository.deleteById(id);
     }
-
-
-
 }
