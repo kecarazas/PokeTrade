@@ -2,6 +2,7 @@ package poketrade.PokeTrade.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -45,6 +46,29 @@ public class GlobalExceptionHandler {
         error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+
+    @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponse> duplicado(DataIntegrityViolationException ex){
+
+        log.error("Error de duplicado: {}", ex.getMessage());
+
+        ErrorResponse error = new ErrorResponse();
+
+        String mensaje = "Dato duplicado";
+
+        if(ex.getMessage().contains("username")){
+            mensaje = "El username ya esta en uso";
+        }
+        if(ex.getMessage().contains("email")){
+            mensaje = "El email ya esta en uso";
+        }
+
+        error.setMensaje(mensaje);
+        error.setError("Conflicto");
+        error.setStatus(HttpStatus.CONFLICT.value());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
 }
