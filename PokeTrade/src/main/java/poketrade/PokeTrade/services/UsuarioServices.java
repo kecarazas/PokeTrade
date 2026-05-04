@@ -31,6 +31,7 @@ public class UsuarioServices {
     }
 
     public Usuario save(UsuarioDTo dto){
+
         // Registramos cuando se registra un nuevo usuario en el sistema
         log.info("Creando nuevo usuario: {}", dto.getUsername());
         Usuario usuario = new Usuario();
@@ -38,24 +39,36 @@ public class UsuarioServices {
         usuario.setUsername(dto.getUsername());
         usuario.setEmail(dto.getEmail());
 
-        return usuarioRepository.save(usuario);
+        Usuario guardar = usuarioRepository.save(usuario);
+        log.info("Usuario guardado con el id: {}", guardar.getId());
+        return guardar;
     }
 
     public Usuario update(Integer id, UsuarioDTo dto){
         // Registramos cuando se actualiza la información de un usuario
         log.info("Actualizando usuario con id: {}", id);
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
+                .orElseThrow(() -> {
+                    log.error("No existe el usuario con el id: {}", id);
+                    return new NotFoundException("Usuario no encontrado");
+                });
 
         usuario.setUsername(dto.getUsername());
         usuario.setEmail(dto.getEmail());
 
-        return usuarioRepository.save(usuario);
+        Usuario guardar = usuarioRepository.save(usuario);
+        log.info("Usuario guardado con el id: {}", guardar.getId());
+        return guardar;
     }
 
     public void delete(Integer id){
         // Registramos cuando se elimina un usuario del sistema
         log.info("Eliminando usuario con id: {}", id);
+        if(!usuarioRepository.existsById(id)){
+            log.warn("Intento de eliminar usuario inexistente con el id: {}", id);
+            throw new NotFoundException("Usuario no encontrado");
+        }
         usuarioRepository.deleteById(id);
+        log.info("Usuario eliminado con el id: {}", id);
     }
 }

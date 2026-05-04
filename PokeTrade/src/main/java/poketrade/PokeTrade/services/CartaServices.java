@@ -2,6 +2,7 @@ package poketrade.PokeTrade.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import poketrade.PokeTrade.exception.NotFoundException;
 import poketrade.PokeTrade.model.Carta;
 import poketrade.PokeTrade.DTo.CartaDTo;
 import poketrade.PokeTrade.repository.CartaRepository;
@@ -49,7 +50,9 @@ public class CartaServices {
         carta.setResistencia(dto.getResistencia());
         carta.setRareza(dto.getRareza());
 
-        return cartaRepository.save(carta);
+        Carta guardar = cartaRepository.save(carta);
+        log.info("Carta guardado con el id: {}", guardar.getId() );
+        return guardar;
     }
 
     public List<Carta> saveLista(List<CartaDTo> dtos){
@@ -75,12 +78,20 @@ public class CartaServices {
 
             cartas.add(carta);
         }
-        return cartaRepository.saveAll(cartas);
+        List<Carta> guardar = cartaRepository.saveAll(cartas);
+        log.info("Lista de {} cartas guardado correctamente", dtos.size());
+        return guardar;
     }
 
     public void delete(Integer id){
         // Registramos cuando se elimina una carta por su id
         log.info("Eliminando carta con id: {}", id);
+        if(!cartaRepository.existsById(id)){
+            log.warn("Intento de eliminar carta inexistente con id: {}", id);
+            throw new NotFoundException("carta no encontrada");
+        }
+
         cartaRepository.deleteById(id);
+        log.info("Carta eliminado correctamente con el id: {}",id);
     }
 }

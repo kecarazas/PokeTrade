@@ -33,6 +33,7 @@ public class PublicacionServices {
     }
 
     public Publicacion save(PublicacionDTo dto){
+
         // Registramos cuando se crea una nueva publicacion de venta
         log.info("Creando nueva publicacion para carta id: {}", dto.getCartaId());
         Publicacion publicacion = new Publicacion();
@@ -43,21 +44,35 @@ public class PublicacionServices {
 
         //buscamos la carta por el id
         Carta carta = cartaRepository.findById(dto.getCartaId())
-                .orElseThrow(() -> new NotFoundException("Carta no encontrada"));
+                .orElseThrow(() -> {
+                    log.error("No existe la carta con el id: {}", dto.getCartaId());
+                    return new NotFoundException("Carta no encontrada");
+                });
         publicacion.setCarta(carta);
 
         //buscamos al usuario por el username
         if (dto.getUsername() != null){
             Usuario usuario = usuarioRepository.findByUsername(dto.getUsername())
-                    .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
+                    .orElseThrow(() -> {
+                        log.error("No existe el usuario: {}", dto.getUsername());
+                        return new NotFoundException("Usuario no encontrado");
+                    });
             publicacion.setUsuario(usuario);
         }
-        return publicacionRepository.save(publicacion);
+
+        Publicacion guardar = publicacionRepository.save(publicacion);
+        log.info("Publicacion guardado con el id: {}", guardar.getId());
+        return guardar;
     }
 
     public void delete(Integer id){
         // Registramos cuando se elimina una publicacion del sistema
         log.info("Eliminando publicacion con id: {}", id);
+
+        if(!publicacionRepository.existsById(id)){
+            log.warn("Intento de eliminar carta inexistente con el id: {}", id);
+        }
         publicacionRepository.deleteById(id);
+        log.info("Publicacion eliminada con el id: {}", id);
     }
 }
