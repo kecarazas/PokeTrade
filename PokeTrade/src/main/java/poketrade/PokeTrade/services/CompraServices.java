@@ -41,21 +41,23 @@ public class CompraServices {
                     return new NotFoundException("Publicacion no encontrada");
                 });
 
-        //buscamos al usuario por el username
+        //condicion que nos ayuda a buscar al usuario por el username
         if (dto.getUsername() != null){
             Usuario usuario = usuarioRepository.findByUsername(dto.getUsername())
                     .orElseThrow(() -> {
-                        log.error("No existe el usuario con el id: {}", dto.getUsername());
+                        log.error("No existe el usuario: {}", dto.getUsername());
                         return new NotFoundException("Usuario no encontrada");
                     });
             compra.setUsuario(usuario);
         }
 
-        if(publicacion.getStock() <= 0){
+        //condicion que nos lanza una advertencia cuando la publicacion tenga 0 stock
+        if(publicacion.getStock() == 0){
             log.warn("Compra rechazada: no hay stock en la publicacion {}", publicacion.getId());
             throw new NotFoundException("No hay stock disponible");
         }
 
+        //condicion que nos advierte que no hay suficiente stock cuando el stock es menor a la cantidad solicitada al momento de comprar
         if(publicacion.getStock() < dto.getCantidad()){
             log.warn("Compra rechazada: no hay suficiente stock en la publicacion {}", publicacion.getId());
             throw new NotFoundException("No hay cantidad disponible");

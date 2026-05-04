@@ -32,8 +32,10 @@ public class CartaServices {
     }
 
     public Carta save(CartaDTo dto){
+
         // Registramos cuando se crea una nueva carta para tener trazabilidad
         log.info("Creando nueva carta: {}", dto.getNombre());
+
         Carta carta = new Carta();
 
         carta.setNombre(dto.getNombre());
@@ -56,8 +58,10 @@ public class CartaServices {
     }
 
     public List<Carta> saveLista(List<CartaDTo> dtos){
+
         // Registramos cuantas cartas se están creando de una vez
         log.info("Creando lista de {} cartas", dtos.size());
+
         List<Carta> cartas = new ArrayList<>();
         for (CartaDTo dto : dtos) {
             Carta carta = new Carta();
@@ -84,8 +88,11 @@ public class CartaServices {
     }
 
     public void delete(Integer id){
+
         // Registramos cuando se elimina una carta por su id
         log.info("Eliminando carta con id: {}", id);
+
+        //condicion que nos ayuda a verificar si existe el id, en caso que no exista nos advierte que intento eliminar al usuario con un id inexistente
         if(!cartaRepository.existsById(id)){
             log.warn("Intento de eliminar carta inexistente con id: {}", id);
             throw new NotFoundException("carta no encontrada");

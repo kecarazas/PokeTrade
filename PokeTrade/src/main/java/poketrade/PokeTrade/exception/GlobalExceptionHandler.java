@@ -14,6 +14,7 @@ public class GlobalExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+    //excepcion que nos da error 404 Not Found
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponse> notFound(NotFoundException ex){
         ErrorResponse error = new ErrorResponse();
@@ -24,6 +25,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
+    //Excepcion que nos lanza un error cuando no se valida por beanValidation
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> exception(MethodArgumentNotValidException ex){
         ErrorResponse error = new ErrorResponse();
@@ -38,6 +40,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
+    //Excepcion que nos lanza error 500
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> exception(Exception ex){
         ErrorResponse error = new ErrorResponse();
@@ -48,6 +51,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
+    //Excepcion que nos lanza error 409 conflict cuando hay un dato duplicado
     @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResponse> duplicado(DataIntegrityViolationException ex){
 

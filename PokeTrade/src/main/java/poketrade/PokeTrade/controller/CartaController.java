@@ -30,7 +30,7 @@ public class CartaController {
         return ResponseEntity.status(201).body(carta1);
     }
 
-    //metodo para guardar una lista con las cartas en la base de datos
+    //endpoint para guardar una lista de cartas en la base de datos
     @PostMapping("/lista")
     public ResponseEntity<List<Carta>> guardarLista(@Valid @RequestBody List<CartaDTo> dto){
         List<Carta> carta1 = cartaServices.saveLista(dto);

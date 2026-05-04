@@ -48,11 +48,14 @@ public class UsuarioServices {
     }
 
     public Usuario update(Integer id, UsuarioDTo dto){
+
         // Registramos cuando se actualiza la información de un usuario
         log.info("Actualizando usuario con id: {}", id);
-        Usuario usuario = usuarioRepository.findByUsername(dto.getUsername())
+
+        //buscamos al usuario por el id, en caso que no exista nos lanza un error 404
+        Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> {
-                    log.error("No existe el username: {}", id);
+                    log.error("No existe el usuario con el id: {}", id);
                     return new NotFoundException("Usuario no encontrado");
                 });
 
@@ -70,6 +73,8 @@ public class UsuarioServices {
     public void delete(Integer id){
         // Registramos cuando se elimina un usuario del sistema
         log.info("Eliminando usuario con id: {}", id);
+
+        //condicion que nos advierte que inteno eliminar un usuario cuyo id no existe
         if(!usuarioRepository.existsById(id)){
             log.warn("Intento de eliminar usuario inexistente con el id: {}", id);
             throw new NotFoundException("Usuario no encontrado");

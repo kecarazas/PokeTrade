@@ -42,7 +42,7 @@ public class PublicacionServices {
         publicacion.setStock(dto.getStock());
         publicacion.setTipoVendedor(dto.getTipoVendedor());
 
-        //buscamos la carta por el id
+        //buscamos la carta y si no existe nos lanza un error
         Carta carta = cartaRepository.findById(dto.getCartaId())
                 .orElseThrow(() -> {
                     log.error("No existe la carta con el id: {}", dto.getCartaId());
@@ -50,7 +50,7 @@ public class PublicacionServices {
                 });
         publicacion.setCarta(carta);
 
-        //buscamos al usuario por el username
+        //condicion que nos lanza error cuando no encuentra al usuario
         if (dto.getUsername() != null){
             Usuario usuario = usuarioRepository.findByUsername(dto.getUsername())
                     .orElseThrow(() -> {
@@ -66,9 +66,11 @@ public class PublicacionServices {
     }
 
     public void delete(Integer id){
+
         // Registramos cuando se elimina una publicacion del sistema
         log.info("Eliminando publicacion con id: {}", id);
 
+        //condicion que nos advierte que intenta eliminar un usuario que no existe mediante el id
         if(!publicacionRepository.existsById(id)){
             log.warn("Intento de eliminar carta inexistente con el id: {}", id);
         }
