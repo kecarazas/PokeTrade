@@ -37,7 +37,10 @@ public class UsuarioServices {
         Usuario usuario = new Usuario();
 
         usuario.setUsername(dto.getUsername());
+        usuario.setNombre(dto.getNombre());
+        usuario.setApellido(dto.getApellido());
         usuario.setEmail(dto.getEmail());
+        usuario.setPassword(dto.getPassword());
 
         Usuario guardar = usuarioRepository.save(usuario);
         log.info("Usuario guardado con el id: {}", guardar.getId());
@@ -47,14 +50,17 @@ public class UsuarioServices {
     public Usuario update(Integer id, UsuarioDTo dto){
         // Registramos cuando se actualiza la información de un usuario
         log.info("Actualizando usuario con id: {}", id);
-        Usuario usuario = usuarioRepository.findById(id)
+        Usuario usuario = usuarioRepository.findByUsername(dto.getUsername())
                 .orElseThrow(() -> {
-                    log.error("No existe el usuario con el id: {}", id);
+                    log.error("No existe el username: {}", id);
                     return new NotFoundException("Usuario no encontrado");
                 });
 
         usuario.setUsername(dto.getUsername());
+        usuario.setNombre(dto.getNombre());
+        usuario.setApellido(dto.getApellido());
         usuario.setEmail(dto.getEmail());
+        usuario.setPassword(dto.getPassword());
 
         Usuario guardar = usuarioRepository.save(usuario);
         log.info("Usuario guardado con el id: {}", guardar.getId());
