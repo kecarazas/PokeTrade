@@ -1,5 +1,7 @@
 package poketrade.PokeTrade.exception;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<ErrorResponse> notFound(NotFoundException ex){
@@ -23,6 +27,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> exception(MethodArgumentNotValidException ex){
         ErrorResponse error = new ErrorResponse();
         String mensaje = ex.getBindingResult().getFieldErrors().stream().filter(e->e.getCode().equals("NotBlank")).findFirst().orElse(ex.getBindingResult().getFieldError()).getDefaultMessage();
+        ex.getBindingResult().getFieldErrors().stream().forEach(e->{
+            log.warn("Validacion fallida: {}", mensaje);
+        });
         error.setMensaje(mensaje);
         error.setError("Bad Request");
         error.setStatus(HttpStatus.BAD_REQUEST.value());
