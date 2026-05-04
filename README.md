@@ -54,13 +54,13 @@ POST http://localhost:8080/api/v1/usuario <br>
 "password":"mario123" <br>
 } <br>
 JSON para crear al usuario <br>
----
+
 GET http://localhost:8080/api/v1/carta <br>
 nos muestra una lista con todas las cartas que hay 
----
+
 GET http://localhost:8080/api/v1/publicacion <br>
 nos muestra si hay una carta en venta
----
+
 POST http://localhost:8080/api/v1/compra <br>
 { <br>
 "cantidad":60, <br>
@@ -68,6 +68,6 @@ POST http://localhost:8080/api/v1/compra <br>
 "publicacionId":1 <br>
 } <br>
 JSON para comprar una carta
---- 
+
 GET http://localhost:8080/api/v1/compra <br>
 Nos muestra la carta que hemos comprado
