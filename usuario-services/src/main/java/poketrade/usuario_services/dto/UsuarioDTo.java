@@ -1,4 +1,4 @@
-package poketrade.PokeTrade.DTo;
+package poketrade.usuario_services.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.*;

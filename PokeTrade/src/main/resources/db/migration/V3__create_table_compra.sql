@@ -3,8 +3,7 @@ CREATE TABLE compra (
     cantidad INT NOT NULL,
     total DOUBLE NOT NULL,
     publicacion_id INT NOT NULL,
-    usuario_id INT,
+    usuario_id INT NOT NULL,
 
-    FOREIGN KEY (publicacion_id) REFERENCES publicacion(id),
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+    FOREIGN KEY (publicacion_id) REFERENCES publicacion(id)
 );

@@ -1,6 +1,6 @@
-package poketrade.PokeTrade.repository;
+package poketrade.usuario_services.repository;
 
-import poketrade.PokeTrade.model.Usuario;
+import poketrade.usuario_services.model.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

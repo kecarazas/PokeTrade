@@ -19,9 +19,8 @@ public class Compra {
     @Column(nullable = false)
     private Double total;
 
-    @ManyToOne
-    @JoinColumn(name="usuario_id", nullable = false)
-    private Usuario usuario;
+    @Column(name="usuario_id", nullable = false)
+    private Integer usuarioId;
 
     @ManyToOne
     @JoinColumn(name="publicacion_id", nullable = false)

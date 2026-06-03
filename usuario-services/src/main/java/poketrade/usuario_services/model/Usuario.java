@@ -1,4 +1,4 @@
-package poketrade.PokeTrade.model;
+package poketrade.usuario_services.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

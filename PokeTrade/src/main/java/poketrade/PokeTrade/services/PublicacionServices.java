@@ -3,6 +3,8 @@ package poketrade.PokeTrade.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import poketrade.PokeTrade.DTo.PublicacionDTo;
+import poketrade.PokeTrade.DTo.UsuarioDTO;
+import poketrade.PokeTrade.cliente.UsuarioClient;
 import poketrade.PokeTrade.exception.NotFoundException;
 import poketrade.PokeTrade.model.*;
 import poketrade.PokeTrade.repository.*;
@@ -26,7 +28,7 @@ public class PublicacionServices {
     private CartaRepository cartaRepository;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioClient usuarioClient;
 
     public List<Publicacion> findAll(){
         return publicacionRepository.findAll();
@@ -52,12 +54,11 @@ public class PublicacionServices {
 
         //condicion que nos lanza error cuando no encuentra al usuario
         if (dto.getUsername() != null){
-            Usuario usuario = usuarioRepository.findByUsername(dto.getUsername())
-                    .orElseThrow(() -> {
-                        log.error("No existe el usuario: {}", dto.getUsername());
-                        return new NotFoundException("Usuario no encontrado");
-                    });
-            publicacion.setUsuario(usuario);
+            UsuarioDTO usuario = usuarioClient.findByUsername(dto.getUsername());
+            if(usuario == null){
+                throw new NotFoundException("Usuario no encontrado");
+            }
+            publicacion.setUsuarioId(usuario.getId());
         }
 
         Publicacion guardar = publicacionRepository.save(publicacion);

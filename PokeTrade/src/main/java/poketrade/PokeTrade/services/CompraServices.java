@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import poketrade.PokeTrade.DTo.CompraDTo;
+import poketrade.PokeTrade.DTo.UsuarioDTO;
+import poketrade.PokeTrade.cliente.UsuarioClient;
 import poketrade.PokeTrade.exception.NotFoundException;
 import poketrade.PokeTrade.model.*;
 import poketrade.PokeTrade.repository.*;
@@ -21,7 +23,7 @@ public class CompraServices {
     @Autowired
     private CompraRepository compraRepository;
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UsuarioClient usuarioClient;
     @Autowired
     private PublicacionRepository publicacionRepository;
 
@@ -43,12 +45,11 @@ public class CompraServices {
 
         //condicion que nos ayuda a buscar al usuario por el username
         if (dto.getUsername() != null){
-            Usuario usuario = usuarioRepository.findByUsername(dto.getUsername())
-                    .orElseThrow(() -> {
-                        log.error("No existe el usuario: {}", dto.getUsername());
-                        return new NotFoundException("Usuario no encontrada");
-                    });
-            compra.setUsuario(usuario);
+            UsuarioDTO usuario = usuarioClient.findByUsername(dto.getUsername());
+            if(usuario == null){
+                throw new NotFoundException("Usuario no encontrado");
+            }
+            compra.setUsuarioId(usuario.getId());
         }
 
         //condicion que nos lanza una advertencia cuando la publicacion tenga 0 stock

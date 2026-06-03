@@ -1,10 +1,10 @@
-package poketrade.PokeTrade.controller;
+package poketrade.usuario_services.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import poketrade.PokeTrade.model.Usuario;
-import poketrade.PokeTrade.DTo.UsuarioDTo;
-import poketrade.PokeTrade.services.UsuarioServices;
+import poketrade.usuario_services.model.Usuario;
+import poketrade.usuario_services.dto.UsuarioDTo;
+import poketrade.usuario_services.services.UsuarioServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +26,11 @@ public class UsuarioController {
     @GetMapping("{id}")
     public ResponseEntity<Usuario> ListarId(@PathVariable Integer id){
         Usuario usuario = usuarioServices.findById(id);
+        return ResponseEntity.ok(usuario);
+    }
+    @GetMapping("/username/{username}")
+    public ResponseEntity<Usuario> buscarPorUsername(@PathVariable String username){
+        Usuario usuario = usuarioServices.findByUsername(username);
         return ResponseEntity.ok(usuario);
     }
 

@@ -30,9 +30,7 @@ public class Publicacion {
     @JoinColumn(name="carta_id", nullable = false)
     private Carta carta;
 
-    //relaciona la publicacion con el usuario que va a vender
-    @ManyToOne
-    @JoinColumn(name="usuario_id", nullable = false)
-    private Usuario usuario;
+    @Column(name = "usuario_id", nullable = false)
+    private Integer usuarioId;
 
 }

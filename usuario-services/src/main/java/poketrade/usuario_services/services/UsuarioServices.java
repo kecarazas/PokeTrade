@@ -1,11 +1,11 @@
-package poketrade.PokeTrade.services;
+package poketrade.usuario_services.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import poketrade.PokeTrade.DTo.UsuarioDTo;
-import poketrade.PokeTrade.exception.NotFoundException;
-import poketrade.PokeTrade.model.Usuario;
-import poketrade.PokeTrade.repository.UsuarioRepository;
+import poketrade.usuario_services.dto.UsuarioDTo;
+import poketrade.usuario_services.exception.NotFoundException;
+import poketrade.usuario_services.model.Usuario;
+import poketrade.usuario_services.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.transaction.Transactional;
@@ -28,6 +28,11 @@ public class UsuarioServices {
 
     public Usuario findById(Integer id){
         return usuarioRepository.findById(id).get();
+    }
+    public Usuario findByUsername(String username){
+        return usuarioRepository.findByUsername(username)
+                .orElseThrow(() ->
+                        new NotFoundException("Usuario no encontrado"));
     }
 
     public Usuario save(UsuarioDTo dto){
