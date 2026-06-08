@@ -1,3 +1,23 @@
+server:
+  port: 8090
+
 spring:
   application:
     name: apiGateway
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: usuario-services
+              uri: http://localhost:8081
+              predicates:
+                - Path=/usuarios/**
+              filters:
+                - StripPrefix=1
+            - id: poketrade-services
+              uri: http://localhost:8080
+              predicates:
+                - Path=/poketrade/**
+              filters:
+                - StripPrefix=1
