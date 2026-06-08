@@ -6,6 +6,7 @@ import poketrade.PokeTrade.DTo.PublicacionDTo;
 import poketrade.PokeTrade.DTo.UsuarioDTO;
 import poketrade.PokeTrade.cliente.UsuarioClient;
 import poketrade.PokeTrade.exception.NotFoundException;
+import poketrade.PokeTrade.exception.RemoteServiceException;
 import poketrade.PokeTrade.model.*;
 import poketrade.PokeTrade.repository.*;
 import jakarta.transaction.Transactional;
@@ -54,11 +55,17 @@ public class PublicacionServices {
 
         //condicion que nos lanza error cuando no encuentra al usuario
         if (dto.getUsername() != null){
-            UsuarioDTO usuario = usuarioClient.findByUsername(dto.getUsername());
-            if(usuario == null){
-                throw new NotFoundException("Usuario no encontrado");
+            try{
+                UsuarioDTO usuario = usuarioClient.findByUsername(dto.getUsername());
+                if(usuario == null){
+                    throw new NotFoundException("Usuario no encontrado");
+                }
+                publicacion.setUsuarioId(usuario.getId());
+            }catch (Exception e){
+                log.error("Error al comunicarse con el servicio usuario", e);
+                throw new RemoteServiceException("No fue posible comunicarse con el servicio usuario");
             }
-            publicacion.setUsuarioId(usuario.getId());
+
         }
 
         Publicacion guardar = publicacionRepository.save(publicacion);

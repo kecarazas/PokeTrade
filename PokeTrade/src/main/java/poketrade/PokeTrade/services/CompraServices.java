@@ -1,5 +1,6 @@
 package poketrade.PokeTrade.services;
 
+import com.sun.jdi.event.ExceptionEvent;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import poketrade.PokeTrade.DTo.CompraDTo;
 import poketrade.PokeTrade.DTo.UsuarioDTO;
 import poketrade.PokeTrade.cliente.UsuarioClient;
 import poketrade.PokeTrade.exception.NotFoundException;
+import poketrade.PokeTrade.exception.RemoteServiceException;
 import poketrade.PokeTrade.model.*;
 import poketrade.PokeTrade.repository.*;
 
@@ -45,11 +47,16 @@ public class CompraServices {
 
         //condicion que nos ayuda a buscar al usuario por el username
         if (dto.getUsername() != null){
-            UsuarioDTO usuario = usuarioClient.findByUsername(dto.getUsername());
-            if(usuario == null){
-                throw new NotFoundException("Usuario no encontrado");
+            try{
+                UsuarioDTO usuario = usuarioClient.findByUsername(dto.getUsername());
+                if(usuario == null){
+                    throw new NotFoundException("Usuario no encontrado");
+                }
+                compra.setUsuarioId(usuario.getId());
+            }catch (Exception e){
+                log.error("Error al comunicarse con el servicio usuario", e);
+                throw new RemoteServiceException("No fue posible comunicarse con el servicio usuario");
             }
-            compra.setUsuarioId(usuario.getId());
         }
 
         //condicion que nos lanza una advertencia cuando la publicacion tenga 0 stock

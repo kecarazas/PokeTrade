@@ -75,4 +75,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
+    //Excepcion que nos da error 503 cuando el servicio no esta disponible
+    @ExceptionHandler(RemoteServiceException.class)
+    public ResponseEntity<ErrorResponse> remote(RemoteServiceException ex){
+        ErrorResponse error = new ErrorResponse();
+        error.setMensaje(ex.getMessage());
+        error.setError("Servicio no disponible");
+        error.setStatus(HttpStatus.SERVICE_UNAVAILABLE.value());
+
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
+    }
+
 }
