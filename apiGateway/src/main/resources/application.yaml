@@ -1,9 +1,11 @@
-server:
-  port: 8090
-
 spring:
   application:
     name: apiGateway
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
   cloud:
     gateway:
       server:
@@ -21,3 +23,29 @@ spring:
                 - Path=/poketrade/**
               filters:
                 - StripPrefix=1
+server:
+  port: 8090
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: usuario-services
+              uri: ${USUARIO_SERVICE_URL}
+              predicates:
+                - Path=/usuarios/**
+              filters:
+                - StripPrefix=1
+            - id: poketrade-services
+              uri: ${POKETRADE_SERVICE_URL}
+              predicates:
+                - Path=/poketrade/**
+              filters:
+                - StripPrefix=1
+server:
+  port: ${PORT:8080}
