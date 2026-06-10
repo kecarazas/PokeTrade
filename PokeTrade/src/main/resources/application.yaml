@@ -16,6 +16,8 @@ spring:
   flyway:
     enabled: true
 
+usuario-service:
+  url: ${USUARIO_SERVICE_URL}
 server:
   port: 8080
 
@@ -33,6 +35,7 @@ spring:
       ddl-auto: validate
   flyway:
     enabled: true
-
+usuario-service:
+  url: ${USUARIO_SERVICE_URL}
 server:
   port: ${PORT:8080}
