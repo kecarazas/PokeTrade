@@ -48,4 +48,5 @@ spring:
               filters:
                 - StripPrefix=1
 server:
-  port: ${PORT:8080}
+  port: ${PORT}
+  address: 0.0.0.0

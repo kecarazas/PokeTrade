@@ -31,11 +31,12 @@ spring:
     username: ${DB_USER}
     password: ${DB_PASSWORD}
   jpa:
-    hibernate:
+    hibernate:e
       ddl-auto: validate
   flyway:
     enabled: true
 usuario-service:
   url: ${USUARIO_SERVICE_URL}
 server:
-  port: ${PORT:8080}
+  port: ${PORT}
+  address: 0.0.0.0
