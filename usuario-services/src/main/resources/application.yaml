@@ -1,6 +1,9 @@
 spring:
   application:
     name: usuario-services
+server:
+  port: ${PORT:8081}
+  address: 0.0.0.0
 ---
 spring:
   config:
@@ -15,8 +18,6 @@ spring:
       ddl-auto: validate
   flyway:
     enabled: true
-server:
-  port: 8081
 ---
 spring:
   config:
@@ -31,6 +32,3 @@ spring:
       ddl-auto: validate
   flyway:
     enabled: true
-server:
-  port: ${PORT}
-  address: 0.0.0.0
