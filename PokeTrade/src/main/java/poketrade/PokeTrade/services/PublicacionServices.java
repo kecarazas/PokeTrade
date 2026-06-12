@@ -55,12 +55,14 @@ public class PublicacionServices {
 
         //condicion que nos lanza error cuando no encuentra al usuario
         if (dto.getUsername() != null){
-            try{
+            try {
                 UsuarioDTO usuario = usuarioClient.findByUsername(dto.getUsername());
-                if(usuario == null){
+                if (usuario == null) {
                     throw new NotFoundException("Usuario no encontrado");
                 }
                 publicacion.setUsuarioId(usuario.getId());
+            }catch (NotFoundException e){
+                throw e;
             }catch (Exception e){
                 log.error("Error al comunicarse con el servicio usuario", e);
                 throw new RemoteServiceException("No fue posible comunicarse con el servicio usuario");
