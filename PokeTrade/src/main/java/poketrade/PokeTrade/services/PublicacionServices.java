@@ -83,6 +83,7 @@ public class PublicacionServices {
         //condicion que nos advierte que intenta eliminar un usuario que no existe mediante el id
         if(!publicacionRepository.existsById(id)){
             log.warn("Intento de eliminar carta inexistente con el id: {}", id);
+            throw new NotFoundException("Publicacion no encontrada");
         }
         publicacionRepository.deleteById(id);
         log.info("Publicacion eliminada con el id: {}", id);
