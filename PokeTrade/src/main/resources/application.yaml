@@ -1,6 +1,12 @@
 spring:
   application:
     name: PokeTrade
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /doc/swagger-ui.html
 ---
 spring:
   config:
