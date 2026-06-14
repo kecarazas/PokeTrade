@@ -1,5 +1,6 @@
 package poketrade.PokeTrade.services;
 
+import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import poketrade.PokeTrade.DTo.PublicacionDTo;
@@ -57,12 +58,10 @@ public class PublicacionServices {
         if (dto.getUsername() != null){
             try {
                 UsuarioDTO usuario = usuarioClient.findByUsername(dto.getUsername());
-                if (usuario == null) {
-                    throw new NotFoundException("Usuario no encontrado");
-                }
                 publicacion.setUsuarioId(usuario.getId());
-            }catch (NotFoundException e){
-                throw e;
+            }catch (FeignException.NotFound e){
+                log.error("Usuario no encontrado", e);
+                throw new NotFoundException("Usuario no encontrado");
             }catch (Exception e){
                 log.error("Error al comunicarse con el servicio usuario", e);
                 throw new RemoteServiceException("No fue posible comunicarse con el servicio usuario");
