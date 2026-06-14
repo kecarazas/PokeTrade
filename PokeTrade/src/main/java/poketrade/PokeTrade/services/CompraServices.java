@@ -1,6 +1,7 @@
 package poketrade.PokeTrade.services;
 
 import com.sun.jdi.event.ExceptionEvent;
+import feign.FeignException;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,10 +50,10 @@ public class CompraServices {
         if (dto.getUsername() != null){
             try{
                 UsuarioDTO usuario = usuarioClient.findByUsername(dto.getUsername());
-                if(usuario == null){
-                    throw new NotFoundException("Usuario no encontrado");
-                }
                 compra.setUsuarioId(usuario.getId());
+            }catch (FeignException.NotFound e){
+                log.error("Usuario no encontrado", e);
+                throw new NotFoundException("Usuario no encontrado");
             }catch (Exception e){
                 log.error("Error al comunicarse con el servicio usuario", e);
                 throw new RemoteServiceException("No fue posible comunicarse con el servicio usuario");
