@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import poketrade.usuario_services.dto.UsuarioDTo;
+import poketrade.usuario_services.dto.UsuarioResponseDto;
 import poketrade.usuario_services.exception.NotFoundException;
 import poketrade.usuario_services.model.Usuario;
 import poketrade.usuario_services.repository.UsuarioRepository;
@@ -41,7 +42,7 @@ public class UsuarioServicesTest {
                     return usuario;
                 });
         //when
-        Usuario usuario = usuarioServices.save(dto);
+        UsuarioResponseDto usuario = usuarioServices.save(dto);
 
         //then
         assertNotNull(usuario);
@@ -49,7 +50,6 @@ public class UsuarioServicesTest {
         assertEquals("kevin", usuario.getNombre());
         assertEquals("carazas", usuario.getApellido());
         assertEquals("ghost@gmail.com", usuario.getEmail());
-        assertEquals("1234567", usuario.getPassword());
     }
 
     @Test
@@ -72,7 +72,7 @@ public class UsuarioServicesTest {
                     return u;
                 });
         //when
-        Usuario user = usuarioServices.update(1, dto);
+        UsuarioResponseDto user = usuarioServices.update(1, dto);
 
         //then
         assertNotNull(user);
