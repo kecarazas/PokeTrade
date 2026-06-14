@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import poketrade.PokeTrade.DTo.CompraDTo;
 import poketrade.PokeTrade.DTo.UsuarioDTO;
 import poketrade.PokeTrade.cliente.UsuarioClient;
+import poketrade.PokeTrade.exception.ConflictExcepcion;
 import poketrade.PokeTrade.exception.NotFoundException;
 import poketrade.PokeTrade.exception.RemoteServiceException;
 import poketrade.PokeTrade.model.*;
@@ -63,13 +64,13 @@ public class CompraServices {
         //condicion que nos lanza una advertencia cuando la publicacion tenga 0 stock
         if(publicacion.getStock() == 0){
             log.warn("Compra rechazada: no hay stock en la publicacion {}", publicacion.getId());
-            throw new NotFoundException("No hay stock disponible");
+            throw new ConflictExcepcion("No hay stock disponible");
         }
 
         //condicion que nos advierte que no hay suficiente stock cuando el stock es menor a la cantidad solicitada al momento de comprar
         if(publicacion.getStock() < dto.getCantidad()){
             log.warn("Compra rechazada: no hay suficiente stock en la publicacion {}", publicacion.getId());
-            throw new NotFoundException("No hay cantidad disponible");
+            throw new ConflictExcepcion("No hay cantidad disponible");
         }
 
         //actualizamos el stock de cada publicacion cuando se haga una compra
