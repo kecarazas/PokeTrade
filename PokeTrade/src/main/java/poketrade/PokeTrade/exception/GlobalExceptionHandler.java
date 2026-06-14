@@ -86,4 +86,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
     }
 
+    @ExceptionHandler(ConflictExcepcion.class)
+    public ResponseEntity<ErrorResponse> conflict(ConflictExcepcion ex){
+        ErrorResponse error = new ErrorResponse();
+        error.setMensaje(ex.getMessage());
+        error.setError("Conflicto");
+        error.setStatus(HttpStatus.CONFLICT.value());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
 }
