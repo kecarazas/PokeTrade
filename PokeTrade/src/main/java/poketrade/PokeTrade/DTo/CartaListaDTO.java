@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 public class CartaListaDTO {
-    @NotEmpty
+    @NotEmpty(message = "La lista de cartas no puede estar vacía")
     @Valid
     public List<CartaDTo> listaCartas;
 }
