@@ -118,12 +118,12 @@ public class CompraController {
                             )
                     )
             ),
-            @ApiResponse(responseCode = "404", description = "La publicación o el usuario no existen, o no hay stock disponible/suficiente para la compra",
+            @ApiResponse(responseCode = "404", description = "La publicación o el usuario no existen",
                     content = @Content(mediaType = "application/json",
                             examples = {
                                 @ExampleObject(
                                         name = "No existe la publicacion",
-                                        summary = "Debe existir la publicacion para comprar",
+                                        summary = "No se encontro la publicacion con el ID proporcionado",
                                         value = """
                                         {
                                             "status": 404,
@@ -134,7 +134,7 @@ public class CompraController {
                                 ),
                                 @ExampleObject(
                                         name = "No existe el usuario",
-                                        summary = "Debe existir el usuario para comprar",
+                                        summary = "No se encontro al usuario con el ID proporcionado",
                                         value = """
                                         {
                                             "status": 404,
