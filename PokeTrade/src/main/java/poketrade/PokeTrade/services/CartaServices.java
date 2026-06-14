@@ -28,7 +28,10 @@ public class CartaServices {
     }
 
     public Carta findById(Integer id){
-        return cartaRepository.findById(id).get();
+        return cartaRepository.findById(id)
+                .orElseThrow(() -> {
+                    return new NotFoundException("No se encontró la carta con id " + id);
+                });
     }
 
     public Carta save(CartaDTo dto){
