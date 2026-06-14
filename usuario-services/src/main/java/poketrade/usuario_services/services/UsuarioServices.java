@@ -44,7 +44,7 @@ public class UsuarioServices {
         return UsuarioMapper.toDTO(usuario);
     }
 
-    public Usuario save(UsuarioDTo dto){
+    public UsuarioResponseDto save(UsuarioDTo dto){
 
         // Registramos cuando se registra un nuevo usuario en el sistema
         log.info("Creando nuevo usuario: {}", dto.getUsername());
@@ -58,10 +58,10 @@ public class UsuarioServices {
 
         Usuario guardar = usuarioRepository.save(usuario);
         log.info("Usuario guardado con el id: {}", guardar.getId());
-        return guardar;
+        return UsuarioMapper.toDTO(guardar);
     }
 
-    public Usuario update(Integer id, UsuarioDTo dto){
+    public UsuarioResponseDto update(Integer id, UsuarioDTo dto){
 
         // Registramos cuando se actualiza la información de un usuario
         log.info("Actualizando usuario con id: {}", id);
@@ -81,7 +81,7 @@ public class UsuarioServices {
 
         Usuario guardar = usuarioRepository.save(usuario);
         log.info("Usuario guardado con el id: {}", guardar.getId());
-        return guardar;
+        return UsuarioMapper.toDTO(guardar);
     }
 
     public void delete(Integer id){
