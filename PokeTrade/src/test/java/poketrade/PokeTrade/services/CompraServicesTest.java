@@ -8,6 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import poketrade.PokeTrade.DTo.CompraDTo;
 import poketrade.PokeTrade.DTo.UsuarioDTO;
 import poketrade.PokeTrade.cliente.UsuarioClient;
+import poketrade.PokeTrade.exception.ConflictExcepcion;
 import poketrade.PokeTrade.exception.NotFoundException;
 import poketrade.PokeTrade.model.Compra;
 import poketrade.PokeTrade.model.Publicacion;
@@ -103,7 +104,7 @@ public class CompraServicesTest {
 
         // When - Then
         assertThrows(
-                NotFoundException.class,
+                ConflictExcepcion.class,
                 () -> compraServices.comprar(dto)
         );
     }
@@ -124,7 +125,7 @@ public class CompraServicesTest {
 
         // When - Then
         assertThrows(
-                NotFoundException.class,
+                ConflictExcepcion.class,
                 () -> compraServices.comprar(dto)
         );
     }

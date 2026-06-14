@@ -1,5 +1,6 @@
 package poketrade.PokeTrade.services;
 
+import feign.FeignException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -103,7 +104,7 @@ public class PublicacionServicesTest {
                 .thenReturn(Optional.of(carta));
 
         when(usuarioClient.findByUsername("ghost"))
-                .thenReturn(null);
+                .thenThrow(FeignException.NotFound.class);
         //when
         NotFoundException exception = assertThrows(
                 NotFoundException.class,
