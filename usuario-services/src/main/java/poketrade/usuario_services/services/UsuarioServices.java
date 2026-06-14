@@ -3,7 +3,9 @@ package poketrade.usuario_services.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import poketrade.usuario_services.dto.UsuarioDTo;
+import poketrade.usuario_services.dto.UsuarioResponseDto;
 import poketrade.usuario_services.exception.NotFoundException;
+import poketrade.usuario_services.mapper.UsuarioMapper;
 import poketrade.usuario_services.model.Usuario;
 import poketrade.usuario_services.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
@@ -22,17 +24,24 @@ public class UsuarioServices {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public List<Usuario> findAll(){
-        return usuarioRepository.findAll();
+    public List<UsuarioResponseDto> findAll(){
+        return usuarioRepository.findAll()
+                .stream()
+                .map(UsuarioMapper::toDTO)
+                .toList();
     }
 
-    public Usuario findById(Integer id){
-        return usuarioRepository.findById(id).get();
+    public UsuarioResponseDto findById(Integer id){
+        Usuario usuario =  usuarioRepository.findById(id)
+                .orElseThrow(()->
+                        new NotFoundException("Usuario no encontrado"));
+        return UsuarioMapper.toDTO(usuario);
     }
-    public Usuario findByUsername(String username){
-        return usuarioRepository.findByUsername(username)
+    public UsuarioResponseDto findByUsername(String username){
+        Usuario usuario = usuarioRepository.findByUsername(username)
                 .orElseThrow(() ->
                         new NotFoundException("Usuario no encontrado"));
+        return UsuarioMapper.toDTO(usuario);
     }
 
     public Usuario save(UsuarioDTo dto){
