@@ -62,8 +62,8 @@ El Gateway expone un único punto de entrada y redirige las peticiones a los mic
 - PokeTrade: `http://localhost:8080/swagger-ui/index.html`
 
 ### Remoto (Railway)
-- Usuario Services: `https://usuario-services-production.up.railway.app/swagger-ui/index.html`
-- PokeTrade: `https://poketrade-production.up.railway.app/swagger-ui/index.html`
+- Usuario Services: `https://usuario-services-production.up.railway.app/doc/swagger-ui/index.html#/`
+- PokeTrade: `https://poketrade-production.up.railway.app/doc/swagger-ui/index.html#/`
 
 ## ▶️ Ejecución local
 
