@@ -1,6 +1,9 @@
 spring:
   application:
     name: apiGateway
+server:
+  port: ${PORT:8090}
+  address: 0.0.0.0
 ---
 spring:
   config:
@@ -23,8 +26,6 @@ spring:
                 - Path=/poketrade/**
               filters:
                 - StripPrefix=1
-server:
-  port: 8090
 ---
 spring:
   config:
@@ -47,6 +48,3 @@ spring:
                 - Path=/poketrade/**
               filters:
                 - StripPrefix=1
-server:
-  port: ${PORT}
-  address: 0.0.0.0
