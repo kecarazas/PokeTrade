@@ -1,6 +1,11 @@
 spring:
   application:
     name: PokeTrade
+server:
+  port: ${PORT:8080}
+  address: 0.0.0.0
+  forward-headers-strategy: framework
+
 springdoc:
   api-docs:
     enabled: true
@@ -24,8 +29,6 @@ spring:
 
 usuario-service:
   url: ${USUARIO_SERVICE_URL}
-server:
-  port: 8080
 
 ---
 spring:
@@ -43,6 +46,3 @@ spring:
     enabled: true
 usuario-service:
   url: ${USUARIO_SERVICE_URL}
-server:
-  port: ${PORT}
-  address: 0.0.0.0
